@@ -3,217 +3,487 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Генератор идей для постов</title>
+  <meta name="description" content="Vibe Coder — сайты, интерфейсы и digital-проекты с характером. Лендинги, портфолио, AI-first продукты.">
+  <title>Vibe Coder — Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --bg: #0f0e17;
-      --surface: rgba(255, 255, 255, 0.06);
-      --border: rgba(255, 255, 255, 0.12);
-      --text: #fffffe;
-      --muted: #a7a9be;
-      --accent: #ff8906;
-      --accent-soft: rgba(255, 137, 6, 0.15);
-      --glow: #7f5af0;
-    }
-
-    body {
-      min-height: 100vh;
-      font-family: "Manrope", system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1.25rem;
-      overflow-x: hidden;
-    }
-
-    .bg-orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.45;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .bg-orb--1 {
-      width: 420px;
-      height: 420px;
-      background: var(--glow);
-      top: -120px;
-      right: -80px;
-      animation: float 9s ease-in-out infinite;
-    }
-
-    .bg-orb--2 {
-      width: 360px;
-      height: 360px;
-      background: var(--accent);
-      bottom: -100px;
-      left: -60px;
-      animation: float 11s ease-in-out infinite reverse;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(24px, -20px) scale(1.06); }
-    }
-
-    .page {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 560px;
-    }
-
-    .badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: var(--accent-soft);
-      border: 1px solid rgba(255, 137, 6, 0.3);
-      padding: 0.35rem 0.75rem;
-      border-radius: 999px;
-      margin-bottom: 1rem;
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards;
-    }
-
-    h1 {
-      font-size: clamp(1.75rem, 5vw, 2.5rem);
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.75rem;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 0.1s forwards;
-    }
-
-    .subtitle {
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeUp 0.7s ease 0.2s forwards;
-    }
-
-    ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.875rem;
-    }
-
-    li {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.125rem 1.25rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      backdrop-filter: blur(12px);
-      cursor: default;
-      opacity: 0;
-      transform: translateY(20px);
-      transition:
-        transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-        border-color 0.3s ease,
-        background 0.3s ease,
-        box-shadow 0.3s ease;
-    }
-
-    li:nth-child(1) { animation: fadeUp 0.7s ease 0.35s forwards; }
-    li:nth-child(2) { animation: fadeUp 0.7s ease 0.5s forwards; }
-    li:nth-child(3) { animation: fadeUp 0.7s ease 0.65s forwards; }
-
-    li:hover {
-      transform: translateY(-4px) scale(1.01);
-      border-color: rgba(255, 137, 6, 0.4);
-      background: rgba(255, 255, 255, 0.09);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 137, 6, 0.1);
-    }
-
-    .icon {
-      flex-shrink: 0;
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      background: var(--accent-soft);
-      border-radius: 12px;
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    li:hover .icon {
-      transform: rotate(-8deg) scale(1.1);
-    }
-
-    .item-text {
-      font-weight: 600;
-      font-size: 1rem;
-      line-height: 1.4;
-    }
-
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="bg-orb bg-orb--1" aria-hidden="true"></div>
-  <div class="bg-orb bg-orb--2" aria-hidden="true"></div>
 
-  <main class="page">
-    <span class="badge">Контент-инструмент</span>
-    <h1>Генератор идей для постов</h1>
-    <p class="subtitle">Выберите формат — и получите готовые идеи для публикаций.</p>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="grid-lines" aria-hidden="true"></div>
 
-    <ul>
-      <li>
-        <span class="icon" aria-hidden="true">💡</span>
-        <span class="item-text">5 идей постов для экспертов</span>
-      </li>
-      <li>
-        <span class="icon" aria-hidden="true">📱</span>
-        <span class="item-text">3 идеи сторис на сегодня</span>
-      </li>
-      <li>
-        <span class="icon" aria-hidden="true">📅</span>
-        <span class="item-text">Контент план на неделю</span>
-      </li>
-    </ul>
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+    <div class="bg-orb bg-orb--3"></div>
+  </div>
+
+  <header class="header" id="header">
+    <div class="header__inner">
+      <a href="#" class="logo">Vibe<span>Coder</span></a>
+      <nav class="nav" aria-label="Основная навигация">
+        <a href="#about" data-nav="about">Обо мне</a>
+        <a href="#skills" data-nav="skills">Услуги</a>
+        <a href="#projects" data-nav="projects">Проекты</a>
+        <a href="#contacts" data-nav="contacts" class="nav-cta">Связаться</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <span class="hero__deco hero__deco--index" aria-hidden="true">01</span>
+        <span class="hero__deco hero__deco--line" aria-hidden="true"></span>
+        <span class="hero__deco hero__deco--corner" aria-hidden="true"></span>
+
+        <p class="hero__badge">Vibe Coder / Portfolio / Web &amp; AI Experiences</p>
+        <h1 class="hero__title">
+          Я делаю сайты, интерфейсы и digital-проекты, которые выглядят как
+          <em>вайб</em>, а работают как система
+        </h1>
+        <p class="hero__subtitle">
+          Не просто «что-то сверстать», а собрать ощущение, стиль, логику и подачу так,
+          чтобы проект хотелось открыть, листать и запомнить.
+        </p>
+        <div class="hero__actions btn-group">
+          <a href="#projects" class="btn btn--primary">Посмотреть проекты</a>
+          <a href="#contacts" class="btn btn--ghost">Обсудить задачу</a>
+        </div>
+      </div>
+      <div class="hero__scroll" aria-hidden="true">
+        <span class="hero__scroll-line"></span>
+        scroll
+      </div>
+    </section>
+
+    <div class="section-divider reveal-line" aria-hidden="true">
+      <span class="section-divider__line"></span>
+    </div>
+
+    <!-- About -->
+    <section class="section" id="about">
+      <div class="container reveal">
+        <div class="section-header">
+          <div>
+            <span class="section-label">Обо мне</span>
+            <h2 class="section-title">Я не просто пишу код — я собираю впечатление</h2>
+          </div>
+        </div>
+        <div class="about-grid">
+          <div class="about-text">
+            <p>
+              Я работаю на стыке кода, визуала, UX и AI-инструментов.
+              Для меня сайт — это не набор блоков. Это ощущение от проекта,
+              ритм, подача, структура и то, как человек чувствует себя внутри интерфейса.
+            </p>
+            <p>Я делаю:</p>
+            <ul class="about-list">
+              <li>лендинги</li>
+              <li>портфолио</li>
+              <li>промо-страницы</li>
+              <li>интерфейсы</li>
+              <li>спецпроекты</li>
+              <li>digital-концепты</li>
+              <li>AI-first сайты и продукты</li>
+            </ul>
+          </div>
+          <div class="about-highlight">
+            Мой подход — сделать быстро, красиво и не бездумно.
+            Чтобы проект не выглядел как очередной шаблон, собранный без вкуса и идеи.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="section" id="skills">
+      <div class="container reveal">
+        <div class="section-header">
+          <div>
+            <span class="section-label">Услуги</span>
+            <h2 class="section-title">Что я делаю</h2>
+          </div>
+          <p class="section-desc">От первого ощущения до готовой страницы — каждый блок с характером и смыслом.</p>
+        </div>
+        <div class="cards-grid reveal-stagger">
+          <article class="card">
+            <div class="card__num">01</div>
+            <h3 class="card__title">Лендинги</h3>
+            <p class="card__text">
+              Сайты, которые не просто «есть», а собирают внимание, держат ритм
+              и ведут человека по смыслу.
+            </p>
+          </article>
+          <article class="card">
+            <div class="card__num">02</div>
+            <h3 class="card__title">Портфолио и личные сайты</h3>
+            <p class="card__text">
+              Страницы, которые показывают не только работы, но и стиль,
+              характер и уровень.
+            </p>
+          </article>
+          <article class="card">
+            <div class="card__num">03</div>
+            <h3 class="card__title">Визуальные концепты</h3>
+            <p class="card__text">
+              Когда нужен не просто сайт, а ощущение: атмосфера, характер,
+              настроение, подача.
+            </p>
+          </article>
+          <article class="card">
+            <div class="card__num">04</div>
+            <h3 class="card__title">AI + Web</h3>
+            <p class="card__text">
+              Использую нейросети как инструмент ускорения и усиления идей,
+              а не как замену мышлению.
+            </p>
+          </article>
+          <article class="card">
+            <div class="card__num">05</div>
+            <h3 class="card__title">UX и структура</h3>
+            <p class="card__text">
+              Продумываю, как человек читает, куда смотрит, где теряется
+              и где принимает решение.
+            </p>
+          </article>
+          <article class="card">
+            <div class="card__num">06</div>
+            <h3 class="card__title">Быстрый запуск</h3>
+            <p class="card__text">
+              Могу собрать сильную первую версию быстро, без месяцев
+              бесконечных согласований.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Approach -->
+    <section class="section" id="approach">
+      <div class="container reveal">
+        <div class="section-header section-header--center">
+          <span class="section-label">Мой подход</span>
+          <h2 class="section-title">Как я работаю</h2>
+        </div>
+        <div class="approach-list">
+          <div class="approach-item">
+            <div class="approach-item__inner">
+              <div class="approach-item__step">01</div>
+              <h3>Сначала вайб</h3>
+              <p>
+                Я смотрю не только на задачу, но и на ощущение,
+                которое должен передавать проект.
+              </p>
+            </div>
+          </div>
+          <div class="approach-item">
+            <div class="approach-item__inner">
+              <div class="approach-item__step">02</div>
+              <h3>Потом структура</h3>
+              <p>
+                Красивый сайт без логики — это просто красивая обёртка.
+                Поэтому я собираю смысл, сценарий и путь пользователя.
+              </p>
+            </div>
+          </div>
+          <div class="approach-item">
+            <div class="approach-item__inner">
+              <div class="approach-item__step">03</div>
+              <h3>Потом реализация</h3>
+              <p>
+                Когда есть стиль и логика, проект собирается быстрее,
+                точнее и выглядит сильно.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider reveal-line" aria-hidden="true">
+      <span class="section-divider__line"></span>
+    </div>
+
+    <!-- Projects -->
+    <section class="section" id="projects">
+      <div class="container reveal">
+        <div class="section-header">
+          <div>
+            <span class="section-label">Проекты</span>
+            <h2 class="section-title">Избранные проекты</h2>
+          </div>
+        </div>
+        <div class="projects-grid reveal-stagger">
+          <article class="project-card project-card--1">
+            <div class="project-card__visual">
+              <div class="project-card__visual-mesh" aria-hidden="true"></div>
+            </div>
+            <div class="project-card__body">
+              <span class="project-card__tag">Лендинг</span>
+              <h3>AI Landing Experience</h3>
+              <p>
+                Лендинг для digital-продукта с акцентом на атмосферу, скорость
+                восприятия и современный визуал.
+              </p>
+              <p class="project-card__done">
+                <strong>Что сделано:</strong> структура, тексты, дизайн-концепция, сборка.
+              </p>
+            </div>
+          </article>
+          <article class="project-card project-card--2">
+            <div class="project-card__visual">
+              <div class="project-card__visual-mesh" aria-hidden="true"></div>
+            </div>
+            <div class="project-card__body">
+              <span class="project-card__tag">Портфолио</span>
+              <h3>Portfolio for Creative Expert</h3>
+              <p>
+                Личный сайт-портфолио, который показывает не только кейсы, но и
+                стиль человека.
+              </p>
+              <p class="project-card__done">
+                <strong>Что сделано:</strong> позиционирование, подача, визуальный ритм, упаковка работ.
+              </p>
+            </div>
+          </article>
+          <article class="project-card project-card--3">
+            <div class="project-card__visual">
+              <div class="project-card__visual-mesh" aria-hidden="true"></div>
+            </div>
+            <div class="project-card__body">
+              <span class="project-card__tag">Воронка</span>
+              <h3>Bot &amp; Funnel Page</h3>
+              <p>
+                Промо-страница под воронку и digital-продукт с акцентом на
+                конверсию и лёгкость восприятия.
+              </p>
+              <p class="project-card__done">
+                <strong>Что сделано:</strong> логика блоков, тексты, CTA, визуальный каркас.
+              </p>
+            </div>
+          </article>
+          <article class="project-card project-card--4">
+            <div class="project-card__visual">
+              <div class="project-card__visual-mesh" aria-hidden="true"></div>
+            </div>
+            <div class="project-card__body">
+              <span class="project-card__tag">Концепт</span>
+              <h3>Concept Site for AI Creator</h3>
+              <p>
+                Сайт с упором на трендовую подачу, сильный первый экран и
+                ощущение «это хочется переслать».
+              </p>
+              <p class="project-card__done">
+                <strong>Что сделано:</strong> creative direction, структура, визуальная концепция.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <div class="philosophy reveal">
+          <p class="philosophy__lead">Потому что я умею видеть проект целиком.</p>
+          <div class="philosophy-columns">
+            <div>
+              <h4>Не только</h4>
+              <ul>
+                <li>как это собрать</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Но и</h4>
+              <ul>
+                <li>как это подать</li>
+                <li>как это будет восприниматься</li>
+                <li>где человек зацепится взглядом</li>
+                <li>что запомнит</li>
+                <li>почему это будет выглядеть дороже, чем стоит</li>
+              </ul>
+            </div>
+          </div>
+          <p class="philosophy__formula">
+            Я соединяю: <span>эстетику</span> + <span>структуру</span> + <span>digital-мышление</span> + <span>скорость</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stack -->
+    <section class="section section--tight" id="stack">
+      <div class="container reveal">
+        <div class="section-header">
+          <div>
+            <span class="section-label">Стек</span>
+            <h2 class="section-title">Инструменты</h2>
+          </div>
+        </div>
+        <div class="badges reveal-stagger">
+          <span class="badge">ChatGPT</span>
+          <span class="badge">Cursor</span>
+          <span class="badge">HTML / CSS / JS</span>
+          <span class="badge">React</span>
+          <span class="badge">Tailwind</span>
+          <span class="badge">Framer Motion</span>
+          <span class="badge">Figma</span>
+          <span class="badge">Tilda / Webflow / custom</span>
+          <span class="badge">Telegram / Bots / AI tools</span>
+        </div>
+        <p class="stack-note">
+          Но если честно — главный инструмент не стек, а вкус,
+          насмотренность и умение собирать цельное впечатление.
+        </p>
+      </div>
+    </section>
+
+    <!-- Audience -->
+    <section class="section section--tight" id="audience">
+      <div class="container reveal">
+        <div class="section-header">
+          <div>
+            <span class="section-label">Для кого</span>
+            <h2 class="section-title">Кому подойдёт моя работа</h2>
+          </div>
+        </div>
+        <ul class="audience-list reveal-stagger">
+          <li data-index="01">экспертам</li>
+          <li data-index="02">креаторам</li>
+          <li data-index="03">digital-проектам</li>
+          <li data-index="04">AI-продуктам</li>
+          <li data-index="05">студиям</li>
+          <li data-index="06">тем, кому нужен сайт с характером</li>
+          <li data-index="07">тем, кто не хочет шаблонную безликую страницу</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Manifesto -->
+    <section class="manifesto reveal">
+      <div class="container">
+        <p>
+          Хороший сайт — это не когда «нормально сверстано».
+          Это когда у проекта появляется энергия, форма и ощущение, что он живой.
+        </p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+      <div class="container reveal">
+        <div class="cta">
+          <h2 class="section-title">
+            Если тебе нужен сайт, который выглядит сильно и ощущается современно — давай соберём
+          </h2>
+          <p class="section-desc">
+            Могу помочь с концепцией, структурой, упаковкой и реализацией.
+            От первого вайба до готовой страницы.
+          </p>
+          <div class="btn-group">
+            <a href="#contacts" class="btn btn--primary">Написать мне</a>
+            <a href="#projects" class="btn btn--ghost">Посмотреть работы</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacts -->
+    <section class="section" id="contacts">
+      <div class="container reveal">
+        <div class="section-header">
+          <div>
+            <span class="section-label">Контакты</span>
+            <h2 class="section-title">Связаться</h2>
+          </div>
+        </div>
+        <div class="contacts-grid">
+          <div class="contact-item">
+            <div class="contact-item__label">Telegram</div>
+            <a href="https://t.me/Kagueva" target="_blank" rel="noopener noreferrer">@Kagueva</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item__label">Email</div>
+            <a href="mailto:kagueva@gmail.com">kagueva@gmail.com</a>
+          </div>
+        </div>
+        <div class="socials">
+          <a href="#" target="_blank" rel="noopener noreferrer">Behance</a>
+          <a href="#" target="_blank" rel="noopener noreferrer">Dribbble</a>
+          <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="#" target="_blank" rel="noopener noreferrer">Notion</a>
+          <a href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Vibe Coder &copy; 2026 — Web &amp; AI Experiences</p>
+      <a href="#" class="footer__back">Наверх ↑</a>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal, .reveal-stagger, .reveal-line');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+    reveals.forEach((el) => observer.observe(el));
+
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('header--scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', (e) => {
+        const href = anchor.getAttribute('href');
+        if (!href) return;
+        if (href === '#') {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+        const target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height'), 10) || 76;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+
+    const navLinks = document.querySelectorAll('.nav a[data-nav]');
+    const navSections = [...navLinks]
+      .map((link) => ({ id: link.dataset.nav, el: document.getElementById(link.dataset.nav) }))
+      .filter((s) => s.el);
+
+    const spyObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            navLinks.forEach((link) => {
+              link.classList.toggle('is-active', link.dataset.nav === entry.target.id);
+            });
+          }
+        });
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+    );
+    navSections.forEach(({ el }) => spyObserver.observe(el));
+  </script>
+
 </body>
 </html>
