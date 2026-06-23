@@ -462,10 +462,30 @@ img {
   max-width: 900px;
   margin-bottom: 1.5rem;
   opacity: 0;
-  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.12s forwards;
 }
 
-.hero__title em {
+.hero__title.split-ready,
+.hero__title.split-done {
+  opacity: 1;
+}
+
+.split-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.split-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.split-char--space {
+  display: inline;
+  white-space: normal;
+  width: 0.25em;
+}
+
+.hero__title em .split-char {
   font-style: normal;
   background: linear-gradient(
     120deg,
@@ -483,6 +503,10 @@ img {
   filter: drop-shadow(0 0 18px rgba(255, 137, 6, 0.2));
 }
 
+.hero__title em {
+  font-style: normal;
+}
+
 @keyframes vibeGradient {
   0%, 100% { background-position: 0% center; }
   50% { background-position: 100% center; }
@@ -495,12 +519,24 @@ img {
   line-height: 1.75;
   margin-bottom: 2.75rem;
   opacity: 0;
-  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.24s forwards;
+  transform: translateY(24px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero__subtitle.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .hero__actions {
   opacity: 0;
-  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards;
+  transform: translateY(24px);
+  transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.1s, transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+}
+
+.hero__actions.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .hero__scroll {
@@ -516,7 +552,13 @@ img {
   text-transform: uppercase;
   color: var(--muted);
   opacity: 0;
-  animation: fadeUp 1s ease 1s forwards;
+  transform: translateY(12px);
+  transition: opacity 0.8s ease 0.25s, transform 0.8s ease 0.25s;
+}
+
+.hero__scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .hero__scroll-line {
@@ -1457,6 +1499,19 @@ img {
   .hero__title em {
     animation: none;
     filter: none;
+  }
+
+  .hero__title em .split-char {
+    animation: none;
+    filter: none;
+  }
+
+  .hero__title,
+  .hero__subtitle,
+  .hero__actions,
+  .hero__scroll {
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   .section-divider__line {

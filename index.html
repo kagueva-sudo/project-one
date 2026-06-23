@@ -43,10 +43,7 @@
         <span class="hero__deco hero__deco--corner" aria-hidden="true"></span>
 
         <p class="hero__badge">Vibe Coder / Portfolio / Web &amp; AI Experiences</p>
-        <h1 class="hero__title">
-          Я делаю сайты, интерфейсы и digital-проекты, которые выглядят как
-          <em>вайб</em>, а работают как система
-        </h1>
+        <h1 class="hero__title" id="hero-title" data-split-text data-split-delay="35" data-split-duration="1.1">Я делаю сайты, интерфейсы и digital-проекты, которые выглядят как <em>вайб</em>, а работают как система</h1>
         <p class="hero__subtitle">
           Не просто «что-то сверстать», а собрать ощущение, стиль, логику и подачу так,
           чтобы проект хотелось открыть, листать и запомнить.
@@ -428,6 +425,8 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="split-text.js"></script>
   <script>
     const reveals = document.querySelectorAll('.reveal, .reveal-stagger, .reveal-line');
     const observer = new IntersectionObserver(
