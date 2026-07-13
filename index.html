@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&family=Manrope:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="carousel.css">
 </head>
 <body>
 
@@ -37,20 +38,27 @@
 
     <!-- Hero -->
     <section class="hero">
-      <div class="container">
-        <span class="hero__deco hero__deco--index" aria-hidden="true">01</span>
-        <span class="hero__deco hero__deco--line" aria-hidden="true"></span>
-        <span class="hero__deco hero__deco--corner" aria-hidden="true"></span>
+      <div class="container hero__layout">
+        <div class="hero__content">
+          <span class="hero__deco hero__deco--index" aria-hidden="true">01</span>
+          <span class="hero__deco hero__deco--line" aria-hidden="true"></span>
+          <span class="hero__deco hero__deco--corner" aria-hidden="true"></span>
 
-        <p class="hero__badge">Vibe Coder / Portfolio / Web &amp; AI Experiences</p>
-        <h1 class="hero__title" id="hero-title" data-split-text data-split-delay="35" data-split-duration="1.1">Я делаю сайты, интерфейсы и digital-проекты, которые выглядят как <em>вайб</em>, а работают как система</h1>
-        <p class="hero__subtitle">
-          Не просто «что-то сверстать», а собрать ощущение, стиль, логику и подачу так,
-          чтобы проект хотелось открыть, листать и запомнить.
-        </p>
-        <div class="hero__actions btn-group">
-          <a href="#projects" class="btn btn--primary">Посмотреть проекты</a>
-          <a href="#contacts" class="btn btn--ghost">Обсудить задачу</a>
+          <p class="hero__badge">Vibe Coder / Portfolio / Web &amp; AI Experiences</p>
+          <div class="hero__headline">
+            <h1 class="hero__title" id="hero-title" data-split-text data-split-delay="35" data-split-duration="1.1">Я делаю сайты, интерфейсы и digital-проекты, которые выглядят как <em>вайб</em>, а работают как система</h1>
+            <figure class="hero__portrait">
+              <img src="portfolio-portrait.png?v=3" alt="Портрет — Vibe Coder" width="1536" height="1024" loading="eager" decoding="async" fetchpriority="high">
+            </figure>
+          </div>
+          <p class="hero__subtitle">
+            Не просто «что-то сверстать», а собрать ощущение, стиль, логику и подачу так,
+            чтобы проект хотелось открыть, листать и запомнить.
+          </p>
+          <div class="hero__actions btn-group">
+            <a href="#projects" class="btn btn--primary">Посмотреть проекты</a>
+            <a href="#contacts" class="btn btn--ghost">Обсудить задачу</a>
+          </div>
         </div>
       </div>
       <div class="hero__scroll" aria-hidden="true">
@@ -358,6 +366,25 @@
       </div>
     </section>
 
+    <!-- Reviews -->
+    <section class="section" id="reviews">
+      <div class="container reveal">
+        <div class="section-header section-header--center">
+          <span class="section-label">Отзывы</span>
+          <h2 class="section-title">Что говорят клиенты</h2>
+          <p class="section-desc">Живые слова о подаче, скорости и ощущении от совместной работы.</p>
+        </div>
+        <div class="reviews-carousel-wrap">
+          <div class="carousel-container" id="testimonials-carousel">
+            <div class="carousel-track" data-carousel-track></div>
+            <div class="carousel-indicators-container">
+              <div class="carousel-indicators" data-carousel-indicators></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Manifesto -->
     <section class="manifesto reveal">
       <div class="container">
@@ -427,6 +454,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="split-text.js"></script>
+  <script src="carousel.js"></script>
   <script>
     const reveals = document.querySelectorAll('.reveal, .reveal-stagger, .reveal-line');
     const observer = new IntersectionObserver(

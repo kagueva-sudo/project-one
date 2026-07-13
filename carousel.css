@@ -1,0 +1,167 @@
+/* Testimonials carousel — адаптация React Bits под Vibe Coder */
+
+.reviews-carousel-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+  padding: 0 0.5rem;
+}
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: var(--carousel-width, 380px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  background: var(--surface);
+  --outer-r: 22px;
+  --p-distance: 12px;
+  touch-action: pan-y;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 16px;
+  cursor: grab;
+  will-change: transform;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.carousel-track.is-dragging {
+  cursor: grabbing;
+}
+
+.carousel-item {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: 220px;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--outer-r) - var(--p-distance));
+  background: var(--bg-elevated);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carousel-item.is-active {
+  border-color: rgba(255, 137, 6, 0.25);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+}
+
+.carousel-item-header {
+  width: 100%;
+  padding: 1.35rem 1.35rem 0;
+}
+
+.carousel-icon-container {
+  display: flex;
+  height: 36px;
+  width: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  border: 1px solid var(--border-accent);
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.carousel-item-content {
+  padding: 1rem 1.35rem 1.35rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel-item-title {
+  margin-bottom: 0.2rem;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.carousel-item-role {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.85rem;
+}
+
+.carousel-item-description {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+
+.carousel-indicators-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.carousel-indicators {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 0.5rem;
+}
+
+.carousel-indicator {
+  height: 8px;
+  width: 8px;
+  border: none;
+  padding: 0;
+  appearance: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.carousel-indicator:hover {
+  background-color: rgba(255, 137, 6, 0.5);
+}
+
+.carousel-indicator.active {
+  background-color: var(--accent);
+  transform: scale(1.25);
+}
+
+.carousel-indicator:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .carousel-item {
+    min-height: 200px;
+  }
+
+  .carousel-item-description {
+    font-size: 0.88rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track {
+    cursor: default;
+  }
+
+  .carousel-indicator.active {
+    transform: none;
+  }
+}
